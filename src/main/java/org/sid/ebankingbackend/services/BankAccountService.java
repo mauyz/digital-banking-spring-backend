@@ -1,15 +1,16 @@
 package org.sid.ebankingbackend.services;
 
-import org.sid.ebankingbackend.dtos.*;
-import org.sid.ebankingbackend.entities.BankAccount;
-import org.sid.ebankingbackend.entities.CurrentAccount;
-import org.sid.ebankingbackend.entities.Customer;
-import org.sid.ebankingbackend.entities.SavingAccount;
+import java.util.List;
+
+import org.sid.ebankingbackend.dtos.AccountHistoryDTO;
+import org.sid.ebankingbackend.dtos.AccountOperationDTO;
+import org.sid.ebankingbackend.dtos.BankAccountDTO;
+import org.sid.ebankingbackend.dtos.CurrentBankAccountDTO;
+import org.sid.ebankingbackend.dtos.CustomerDTO;
+import org.sid.ebankingbackend.dtos.SavingBankAccountDTO;
 import org.sid.ebankingbackend.exceptions.BalanceNotSufficientException;
 import org.sid.ebankingbackend.exceptions.BankAccountNotFoundException;
 import org.sid.ebankingbackend.exceptions.CustomerNotFoundException;
-
-import java.util.List;
 public interface BankAccountService {
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
     CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
