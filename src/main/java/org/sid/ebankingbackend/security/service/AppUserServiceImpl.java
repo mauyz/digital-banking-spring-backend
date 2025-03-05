@@ -8,8 +8,8 @@ import org.sid.ebankingbackend.security.repo.AppRoleRepository;
 import org.sid.ebankingbackend.security.repo.AppUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -75,7 +75,7 @@ public class AppUserServiceImpl implements AppUserService {
 	}
 
 	@Override
-	public AppUser loadAppUserByUsername(String username) {
+	public AppUser loadUserByUsername(String username) {
 		return appUserRepository.findByUsername(username);
 	}
 

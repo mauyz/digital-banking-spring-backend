@@ -13,5 +13,5 @@ public interface AppUserService {
 
 	void removeFromRoleToUser(String username, String role);
 
-	AppUser loadAppUserByUsername(String username);
+	AppUser loadUserByUsername(String username);
 }
