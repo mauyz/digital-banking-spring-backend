@@ -3,12 +3,12 @@ package org.sid.ebankingbackend.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.sid.ebankingbackend.enums.OperationType;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.Date;
-@Entity
+@Entity 
 @Data @NoArgsConstructor @AllArgsConstructor
 public class AccountOperation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
