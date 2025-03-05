@@ -1,7 +1,9 @@
 package org.sid.ebankingbackend.exceptions;
 
 public class BankAccountNotFoundException extends Exception {
-    public BankAccountNotFoundException(String message) {
+    private static final long serialVersionUID = 1L;
+
+	public BankAccountNotFoundException(String message) {
         super(message);
     }
 }
