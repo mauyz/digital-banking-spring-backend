@@ -1,7 +1,6 @@
 package org.sid.ebankingbackend.web;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.sid.ebankingbackend.dtos.CustomerDTO;
 import org.sid.ebankingbackend.exceptions.CustomerNotFoundException;
 import org.sid.ebankingbackend.services.BankAccountService;
@@ -11,8 +10,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@Slf4j
-@CrossOrigin("*")
+//@Slf4j
+//@CrossOrigin("*")
 public class CustomerRestController {
     private BankAccountService bankAccountService;
     @GetMapping("/customers")

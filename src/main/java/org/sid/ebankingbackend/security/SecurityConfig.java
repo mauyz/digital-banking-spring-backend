@@ -1,7 +1,6 @@
 package org.sid.ebankingbackend.security;
 
 import javax.crypto.spec.SecretKeySpec;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +19,9 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
@@ -37,6 +39,7 @@ public class SecurityConfig {
 		httpSecurity.formLogin(customizer -> customizer.disable());
 		httpSecurity.sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		httpSecurity.csrf(crsf -> crsf.disable());
+		httpSecurity.cors(Customizer.withDefaults());
 		httpSecurity.authorizeHttpRequests(customizer -> customizer
 				.requestMatchers("/auth/login/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll());
 		httpSecurity.authorizeHttpRequests(customizer -> customizer.anyRequest().authenticated());
@@ -66,5 +69,16 @@ public class SecurityConfig {
 
 		return NimbusJwtDecoder.withSecretKey(secretKeySpec).macAlgorithm(MacAlgorithm.HS512).build();
 	}
-
+	
+	@Bean
+	 CorsConfigurationSource configurationSource() {
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		corsConfiguration.addAllowedOrigin("*");
+		corsConfiguration.addAllowedMethod("*");
+		corsConfiguration.addAllowedHeader("*");
+		
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**",corsConfiguration);
+		return source;
+	}
 }
