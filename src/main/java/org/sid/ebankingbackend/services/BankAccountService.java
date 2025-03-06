@@ -11,27 +11,39 @@ import org.sid.ebankingbackend.dtos.SavingBankAccountDTO;
 import org.sid.ebankingbackend.exceptions.BalanceNotSufficientException;
 import org.sid.ebankingbackend.exceptions.BankAccountNotFoundException;
 import org.sid.ebankingbackend.exceptions.CustomerNotFoundException;
+
 public interface BankAccountService {
-    CustomerDTO saveCustomer(CustomerDTO customerDTO);
-    CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
-    SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
-    List<CustomerDTO> listCustomers();
-    BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
-    void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException;
-    void credit(String accountId, double amount, String description) throws BankAccountNotFoundException;
-    void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException;
+	CustomerDTO saveCustomer(CustomerDTO customerDTO);
 
-    List<BankAccountDTO> bankAccountList();
+	CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId)
+			throws CustomerNotFoundException;
 
-    CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
+	SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId)
+			throws CustomerNotFoundException;
 
-    CustomerDTO updateCustomer(CustomerDTO customerDTO);
+	List<CustomerDTO> listCustomers();
 
-    void deleteCustomer(Long customerId);
+	BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
 
-    List<AccountOperationDTO> accountHistory(String accountId);
+	void debit(String accountId, double amount, String description)
+			throws BankAccountNotFoundException, BalanceNotSufficientException;
 
-    AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
+	void credit(String accountId, double amount, String description) throws BankAccountNotFoundException;
 
-    List<CustomerDTO> searchCustomers(String keyword);
+	void transfer(String accountIdSource, String accountIdDestination, double amount)
+			throws BankAccountNotFoundException, BalanceNotSufficientException;
+
+	List<BankAccountDTO> bankAccountList();
+
+	CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
+
+	CustomerDTO updateCustomer(CustomerDTO customerDTO);
+
+	void deleteCustomer(Long customerId);
+
+	List<AccountOperationDTO> accountHistory(String accountId);
+
+	AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
+
+	List<CustomerDTO> searchCustomers(String keyword);
 }

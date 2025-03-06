@@ -1,7 +1,12 @@
 package org.sid.ebankingbackend.security;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.sid.ebankingbackend.security.entities.AppUser;
 import org.sid.ebankingbackend.security.service.AppUserService;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,9 +32,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException(String.format("User %s not found", username));
 		}
 
-		String[] roles = appUser.getRoles().stream().map(role -> role.getRole()).toArray(String[]::new);
+		List<GrantedAuthority> roles = appUser.getRoles().stream()
+				.map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
 
-		return User.builder().username(appUser.getUsername()).password(appUser.getPassword()).roles(roles)
+		return User.builder().username(appUser.getUsername()).password(appUser.getPassword()).authorities(roles)
 				.build();
 	}
 

@@ -13,9 +13,6 @@ import org.sid.ebankingbackend.services.BankAccountService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class EbankingBackendApplication {
@@ -24,7 +21,7 @@ public class EbankingBackendApplication {
 		SpringApplication.run(EbankingBackendApplication.class, args);
 	}
 
-	@Bean
+	//@Bean
 	CommandLineRunner generateCustomers(BankAccountService bankAccountService) {
 		return args -> {
 			Stream.of("Customer1", "Customer2", "Customer3").forEach(name -> {
@@ -58,7 +55,7 @@ public class EbankingBackendApplication {
 		};
 	}
 
-	@Bean
+	//@Bean
 	CommandLineRunner generateAppUsers(AppUserService appUserService) {
 		return args -> {
 			appUserService.addNewRole("USER");
@@ -75,11 +72,6 @@ public class EbankingBackendApplication {
 			appUserService.addRoleToUser("admin", "ADMIN");
 
 		};
-	}
-	
-	@Bean
-    PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
 	}
 
 }
