@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -29,8 +31,8 @@ public class SecurityController {
 	private JwtEncoder jwtEncoder;
 
 	@GetMapping("/auth/profile")
-	public Authentication getProfile(Authentication authentication) {
-		return authentication;
+	public Authentication getProfile() {
+		return SecurityContextHolder.getContext().getAuthentication();
 	}
 
 	@PostMapping("/auth/login")
@@ -41,11 +43,16 @@ public class SecurityController {
 
 		Instant instant = Instant.now();
 
-		String scope = authentication.getAuthorities().stream().map(role -> role.getAuthority())
-				.collect(Collectors.joining(" "));
+		String scope = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(", "));
 
-		JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder().issuedAt(instant)
-				.expiresAt(instant.plus(1, ChronoUnit.HOURS)).subject(username).claim("scope", scope).build();
+		JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
+				.issuedAt(instant)
+				.expiresAt(instant.plus(1, ChronoUnit.HOURS))
+				.subject(username)
+				.claim("authorities", scope)
+				.build();
 
 		JwtEncoderParameters parameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS512).build(),
 				jwtClaimsSet);
