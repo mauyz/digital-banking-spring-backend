@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface AccountOperationRepository extends JpaRepository<AccountOperation, Long> {
 	List<AccountOperation> findByBankAccountId(String accountId);
+	
+	void deleteByBankAccountId (String accountId);	
 
 	Page<AccountOperation> findByBankAccountIdOrderByOperationDateDesc(String accountId, Pageable pageable);
 }
