@@ -172,10 +172,15 @@ public class BankAccountServiceImpl implements BankAccountService {
 
 	@Override
 	public void deleteCustomer(Long customerId) {
+		List<BankAccount> accounts = bankAccountRepository.findByCustomerId(customerId);
+		for(BankAccount account : accounts) {
+			accountOperationRepository.deleteByBankAccountId(account.getId());
+			bankAccountRepository.delete(account);
+		}
 		customerRepository.deleteById(customerId);
 	}
 
-	@Override
+	@Override	
 	public List<AccountOperationDTO> accountHistory(String accountId) {
 		List<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(accountId);
 		return accountOperations.stream().map(op -> dtoMapper.fromAccountOperation(op)).collect(Collectors.toList());
