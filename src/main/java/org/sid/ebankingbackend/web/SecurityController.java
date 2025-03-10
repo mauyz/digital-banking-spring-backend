@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -43,9 +44,9 @@ public class SecurityController {
 
 		Instant instant = Instant.now();
 
-		String scope = authentication.getAuthorities().stream()
+		List<String> scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.toList());
 
 		JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
 				.issuedAt(instant)
