@@ -24,7 +24,7 @@ public class AppUserServiceImpl implements AppUserService {
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public AppUser addNewUser(String username, String password, String email, String confirmPassword) {
+	public AppUser addNewUser(String username, String password, String confirmPassword) {
 		AppUser user = appUserRepository.findByUsername(username);
 		if (user != null) {
 			throw new RuntimeException("User already exists");
@@ -32,7 +32,7 @@ public class AppUserServiceImpl implements AppUserService {
 		if (password != confirmPassword) {
 			throw new RuntimeException("Password not match");
 		}
-		user = AppUser.builder().userId(UUID.randomUUID().toString()).username(username).email(email)
+		user = AppUser.builder().userId(UUID.randomUUID().toString()).username(username)
 				.password(passwordEncoder.encode(password)).build();
 		user = appUserRepository.save(user);
 		return user;

@@ -2,6 +2,7 @@ package org.sid.ebankingbackend.web;
 
 import lombok.AllArgsConstructor;
 import org.sid.ebankingbackend.dtos.CustomerDTO;
+import org.sid.ebankingbackend.dtos.CustomerWithUserDto;
 import org.sid.ebankingbackend.exceptions.CustomerNotFoundException;
 import org.sid.ebankingbackend.services.BankAccountService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +40,11 @@ public class CustomerRestController {
 	@PostMapping("/customers")
 	public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
 		return bankAccountService.saveCustomer(customerDTO);
+	}
+	
+	@PostMapping("/customers/user")
+	public CustomerDTO saveCustomerWith(@RequestBody CustomerWithUserDto customerDTO) {
+		return bankAccountService.saveCustomerWithUser	(customerDTO);
 	}
 
 	@PutMapping("/customers/{customerId}")

@@ -5,7 +5,7 @@ import org.sid.ebankingbackend.security.entities.AppUser;
 
 public interface AppUserService {
 
-	AppUser addNewUser(String username, String password, String email, String confirmPassword);
+	AppUser addNewUser(String username, String password, String confirmPassword);
 
 	AppRole addNewRole(String role);
 

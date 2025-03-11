@@ -23,9 +23,7 @@ public class AppUser {
 	@Id
 	private String userId;	
 	@Column(unique = true)
-	private String username;
-	@Column(unique = true)
-	private String email;
+	private String username;	
 	private String password;
 	@ManyToAny(fetch = FetchType.LAZY)
 	@Builder.Default

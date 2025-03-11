@@ -60,10 +60,10 @@ public class EbankingBackendApplication {
 		return args -> {
 			appUserService.addNewRole("USER");
 			appUserService.addNewRole("ADMIN");
-			appUserService.addNewUser("user1", "1234", "user1@gmail.com", "1234");
-			appUserService.addNewUser("user2", "1234", "user2@gmail.com", "1234");
+			appUserService.addNewUser("user1", "1234", "1234");
+			appUserService.addNewUser("user2", "1234", "1234");
 
-			appUserService.addNewUser("admin", "admin", "admin@gmail.com", "admin");
+			appUserService.addNewUser("admin", "admin", "admin");
 
 			appUserService.addRoleToUser("user1", "USER");
 			appUserService.addRoleToUser("user2", "USER");
