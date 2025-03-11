@@ -30,7 +30,7 @@ public class CustomerRestController {
 		return bankAccountService.getCustomer(customerId);
 	}
 	
-	@GetMapping("/customers/users/{username}")	
+	@GetMapping("/customers/user/{username}")	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")		
 	public CustomerDTO getCustomer(@PathVariable String username){
 		return bankAccountService.getCustomerByUsername(username);
