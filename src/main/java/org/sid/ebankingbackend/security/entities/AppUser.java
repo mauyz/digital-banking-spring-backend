@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.sid.ebankingbackend.entities.Customer;
 
 import jakarta.persistence.Column;
@@ -26,6 +28,7 @@ public class AppUser {
 	private String username;	
 	private String password;
 	@ManyToAny(fetch = FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@Builder.Default
 	private List<AppRole> roles = new ArrayList<AppRole>();	
 	@OneToOne(mappedBy = "user")
