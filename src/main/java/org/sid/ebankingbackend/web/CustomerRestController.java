@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class CustomerRestController {
 	private BankAccountService bankAccountService;
 
@@ -42,7 +42,7 @@ public class CustomerRestController {
 	}
 
 	@DeleteMapping("/customers/{id}")
-	public void deleteCustomer(@PathVariable Long id) {
+	public void deleteCustomer(@PathVariable Long id) throws CustomerNotFoundException {
 		bankAccountService.deleteCustomer(id);
 	}
 }
