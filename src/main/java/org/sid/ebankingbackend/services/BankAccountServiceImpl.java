@@ -12,6 +12,8 @@ import org.sid.ebankingbackend.mappers.BankAccountMapperImpl;
 import org.sid.ebankingbackend.repositories.AccountOperationRepository;
 import org.sid.ebankingbackend.repositories.BankAccountRepository;
 import org.sid.ebankingbackend.repositories.CustomerRepository;
+import org.sid.ebankingbackend.security.entities.AppUser;
+import org.sid.ebankingbackend.security.service.AppUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -30,12 +32,20 @@ public class BankAccountServiceImpl implements BankAccountService {
 	private CustomerRepository customerRepository;
 	private BankAccountRepository bankAccountRepository;
 	private AccountOperationRepository accountOperationRepository;
+	private AppUserService appUserService;
 	private BankAccountMapperImpl dtoMapper;
 
 	@Override
 	public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
 		log.info("Saving new Customer");
 		Customer customer = dtoMapper.fromCustomerDTO(customerDTO);
+		AppUser user = customer.getUser();
+		if(user != null) {
+			appUserService.addNewRole("USER");
+			user = appUserService.addNewUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getPassword());
+			appUserService.addRoleToUser(user.getUsername(), "USER");
+			customer.setUser(user);
+		}
 		Customer savedCustomer = customerRepository.save(customer);
 		return dtoMapper.fromCustomer(savedCustomer);
 	}
