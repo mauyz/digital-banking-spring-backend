@@ -41,11 +41,10 @@ public class AppUserServiceImpl implements AppUserService {
 	@Override
 	public AppRole addNewRole(String role) {
 		AppRole appRole = appRoleRepository.findById(role).orElse(null);
-		if (appRole != null) {
-			throw new RuntimeException("Role alreaady exists");
+		if (appRole == null) {
+			appRole = AppRole.builder().role(role).build();
+			appRole = appRoleRepository.save(appRole);
 		}
-		appRole = AppRole.builder().role(role).build();
-		appRole = appRoleRepository.save(appRole);
 		return appRole;
 	}
 
