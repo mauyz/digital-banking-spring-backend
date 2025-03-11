@@ -29,6 +29,12 @@ public class CustomerRestController {
 	public CustomerDTO getCustomer(@PathVariable(name = "id") Long customerId) throws CustomerNotFoundException {
 		return bankAccountService.getCustomer(customerId);
 	}
+	
+	@GetMapping("/customers/users/{username}")	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")		
+	public CustomerDTO getCustomer(@PathVariable String username){
+		return bankAccountService.getCustomerByUsername(username);
+	}
 
 	@PostMapping("/customers")
 	public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
