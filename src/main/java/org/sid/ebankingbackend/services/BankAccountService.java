@@ -7,6 +7,7 @@ import org.sid.ebankingbackend.dtos.AccountOperationDTO;
 import org.sid.ebankingbackend.dtos.BankAccountDTO;
 import org.sid.ebankingbackend.dtos.CurrentBankAccountDTO;
 import org.sid.ebankingbackend.dtos.CustomerDTO;
+import org.sid.ebankingbackend.dtos.CustomerWithUserDto;
 import org.sid.ebankingbackend.dtos.SavingBankAccountDTO;
 import org.sid.ebankingbackend.exceptions.BalanceNotSufficientException;
 import org.sid.ebankingbackend.exceptions.BankAccountNotFoundException;
@@ -14,6 +15,8 @@ import org.sid.ebankingbackend.exceptions.CustomerNotFoundException;
 
 public interface BankAccountService {
 	CustomerDTO saveCustomer(CustomerDTO customerDTO);
+	
+	CustomerDTO saveCustomerWithUser(CustomerWithUserDto customerDto);
 
 	CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId)
 			throws CustomerNotFoundException;

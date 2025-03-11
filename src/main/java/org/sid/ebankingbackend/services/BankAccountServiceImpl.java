@@ -39,13 +39,19 @@ public class BankAccountServiceImpl implements BankAccountService {
 	public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
 		log.info("Saving new Customer");
 		Customer customer = dtoMapper.fromCustomerDTO(customerDTO);
-		AppUser user = customer.getUser();
-		if(user != null) {
-			appUserService.addNewRole("USER");
-			user = appUserService.addNewUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getPassword());
-			appUserService.addRoleToUser(user.getUsername(), "USER");
-			customer.setUser(user);
-		}
+		Customer savedCustomer = customerRepository.save(customer);
+		return dtoMapper.fromCustomer(savedCustomer);
+	}
+	
+	@Override
+	public CustomerDTO saveCustomerWithUser(CustomerWithUserDto customerDTO) {
+		Customer customer = new Customer();
+		AppUser user = appUserService.addNewUser(customerDTO.getUsername(), customerDTO.getPassword(),	
+					customerDTO.getPassword());
+		appUserService.addRoleToUser(user.getUsername(), "USER");
+		customer.setEmail(customerDTO.getEmail());
+		customer.setName(customerDTO.getName());
+		customer.setUser(user);
 		Customer savedCustomer = customerRepository.save(customer);
 		return dtoMapper.fromCustomer(savedCustomer);
 	}
