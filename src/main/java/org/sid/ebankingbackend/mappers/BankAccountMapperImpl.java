@@ -13,21 +13,19 @@ import org.sid.ebankingbackend.security.entities.AppUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class BankAccountMapperImpl {
 	
-	public AppUserDto fromAppUser(AppUser user) {
-		AppUserDto appUserDto = new AppUserDto();
-		BeanUtils.copyProperties(user, appUserDto);
-		return appUserDto;	
-	}
+	private AppUserMapperImpl userMapperImpl;
 	
-	
-	public CustomerDTO fromCustomer(Customer customer) {
+	public CustomerDTO fromCustomer(Customer customer) {	
 		CustomerDTO customerDTO = new CustomerDTO();
 		BeanUtils.copyProperties(customer, customerDTO);
 		if(customer.getUser() != null) {	
-			customerDTO.setUser(fromAppUser(customer.getUser()));	
+			customerDTO.setUser(userMapperImpl.fromAppUser(customer.getUser()));	
 		}
 		return customerDTO;
 	}
